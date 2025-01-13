@@ -1,12 +1,15 @@
 import React, { useEffect } from "react"
 import { fetchAccessToken } from "./authSlice"
 import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { Center } from "../../components/Center/Center"
+import { Status } from "../../types"
+import { Spinner } from "../../components/Spinner"
 
 interface Props {
   children: React.ReactNode
 }
 
-const Auth: React.FC<Props> = ({ children }) => {
+export function Auth({ children }: Props) {
   const dispatch = useAppDispatch()
   const { status } = useAppSelector(state => state.auth)
 
@@ -16,15 +19,25 @@ const Auth: React.FC<Props> = ({ children }) => {
     }
   }, [dispatch, status])
 
-  if (status === "loading") {
-    return <div>Loading...</div>
+  if (status === Status.pending) {
+    return (
+      <Center>
+        <Spinner size={80} color="#808080" />
+      </Center>
+    )
   }
 
   if (status === "failed") {
-    return <div>Failed to load access token. Please try again later.</div>
+    return (
+      <Center>
+        Failed to load access token and login. Please try refreshing.
+      </Center>
+    )
   }
 
-  return <>{children}</>
-}
+  if (status === "succeeded") {
+    return <>{children}</>
+  }
 
-export default Auth
+  return <Center>This is a spotify app</Center>
+}

@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 160px);
+  gap: 32px;
+}
+
+.content {
+  flex: 1;
+}
+
+.albums {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
+  place-items: center;
+  justify-content: center;
+  grid-auto-rows: 1fr;
+  align-items: stretch;
+}

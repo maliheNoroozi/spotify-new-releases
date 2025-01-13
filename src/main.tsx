@@ -1,15 +1,10 @@
 import React from "react"
 import { createRoot } from "react-dom/client"
 import { Provider } from "react-redux"
-import App from "./App"
-import Auth from "./features/auth/Auth"
+import { App } from "./App"
 import { store } from "./app/store"
-import "./index.css"
 
-import "@fontsource/roboto/300.css"
-import "@fontsource/roboto/400.css"
-import "@fontsource/roboto/500.css"
-import "@fontsource/roboto/700.css"
+import "./index.css"
 
 const container = document.getElementById("root")
 
@@ -19,9 +14,7 @@ if (container) {
   root.render(
     <React.StrictMode>
       <Provider store={store}>
-        <Auth>
-          <App />
-        </Auth>
+        <App />
       </Provider>
     </React.StrictMode>,
   )

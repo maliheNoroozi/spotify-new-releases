@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
+import { Status } from "../../types"
 
 const clientId = import.meta.env.VITE_REACT_APP_SPOTIFY_CLIENT_ID
 const clientSecret = import.meta.env.VITE_REACT_APP_SPOTIFY_CLIENT_SECRET
@@ -7,14 +8,14 @@ const authEndpoint = "https://accounts.spotify.com/api/token"
 export interface AuthState {
   access_token: string | null
   expires_in: number | null
-  status: "idle" | "loading" | "succeeded" | "failed"
+  status: Status
   error: string | null
 }
 
 const initialState: AuthState = {
   access_token: "",
   expires_in: 0,
-  status: "idle",
+  status: Status.idle,
   error: null,
 }
 
@@ -57,7 +58,7 @@ export const authSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchAccessToken.pending, state => {
-        state.status = "loading"
+        state.status = Status.pending
       })
       .addCase(
         fetchAccessToken.fulfilled,
@@ -65,7 +66,7 @@ export const authSlice = createSlice({
           state,
           action: PayloadAction<{ access_token: string; expires_in: number }>,
         ) => {
-          state.status = "succeeded"
+          state.status = Status.succeeded
           state.access_token = action.payload.access_token
           state.expires_in = action.payload.expires_in
           state.error = null
@@ -74,7 +75,7 @@ export const authSlice = createSlice({
       .addCase(
         fetchAccessToken.rejected,
         (state, action: PayloadAction<any>) => {
-          state.status = "failed"
+          state.status = Status.failed
           state.error = action.payload || "Failed to fetch access token"
         },
       )

@@ -3,8 +3,9 @@ import { combineSlices, configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
 
 import { authSlice } from "../features/auth/authSlice"
+import { newReleasesSlice } from "../features/newReleases/newReleasesSlice"
 
-const rootReducer = combineSlices(authSlice)
+const rootReducer = combineSlices(authSlice, newReleasesSlice)
 
 export const makeStore = (preloadedState?: Partial<RootState>) => {
   const store = configureStore({

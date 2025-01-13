@@ -1,14 +1,12 @@
-import { Container } from "@mui/material"
-import AppRoutes from "./routes"
+import { Box } from "@mui/material"
+import AppRouter from "./router"
 
 import "./App.css"
 
-const App = () => {
+export function App() {
   return (
-    <Container sx={{ marginY: "40px" }}>
-      <AppRoutes />
-    </Container>
+    <Box className="app">
+      <AppRouter />
+    </Box>
   )
 }
-
-export default App

@@ -4,11 +4,8 @@ import newReleasesReducer, {
   initialState,
 } from "./newReleasesSlice"
 import { Status } from "@/types"
+import { mockAlbums } from "./test-utils"
 
-const mpockAlbums = [
-  { id: "1", name: "test 1" },
-  { id: "2", name: "test 2" },
-]
 const mockTotal = 2
 const mockError = "Failed to fetch new releases"
 
@@ -32,7 +29,7 @@ describe("NewReleases reducer sync actions", () => {
     const action = {
       type: fetchNewReleases.fulfilled.type,
       payload: {
-        albums: mpockAlbums,
+        albums: mockAlbums,
         total: mockTotal,
       },
       meta: {
@@ -45,7 +42,7 @@ describe("NewReleases reducer sync actions", () => {
     const state = newReleasesReducer(initialState, action)
     expect(state).toEqual({
       ...initialState,
-      pages: { 1: mpockAlbums },
+      pages: { 1: mockAlbums },
       totalPages: mockTotal,
       status: Status.succeeded,
     })

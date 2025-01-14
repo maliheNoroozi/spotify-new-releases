@@ -87,6 +87,14 @@ export const newReleasesSlice = createSlice({
           "Failed to fetch new releases"
       })
   },
+  selectors: {
+    selectPages: state => state.pages,
+    selectStatus: state => state.status,
+    selectTotalPages: state => state.totalPages,
+    selectError: state => state.error,
+  },
 })
 
+export const { selectPages, selectTotalPages, selectStatus, selectError } =
+  newReleasesSlice.selectors
 export default newReleasesSlice.reducer

@@ -26,7 +26,7 @@ export function Album({ album }: Props) {
         title={name}
         alt={name}
         className={classes.image}
-        sx={{ height: album.images[0].height || 300 }}
+        sx={{ height: images[0]?.height || 300 }}
       />
       <CardContent className={classes.content}>
         <Link
@@ -39,16 +39,14 @@ export function Album({ album }: Props) {
             {name}
           </Typography>
         </Link>
-        <Box className={classes.artists}>
-          {artists.map(artist => (
-            <Link
-              href={artist.uri}
-              key={artist.id}
-              underline="hover"
-              color="textPrimary"
-            >
-              {artist.name}
-            </Link>
+        <Box className={classes.artists} data-testid="album-artists">
+          {artists.map((artist, index) => (
+            <span key={artist.id}>
+              <Link href={artist.uri} underline="hover" color="textPrimary">
+                {artist.name}
+              </Link>
+              {index < artists.length - 1 && ", "}
+            </span>
           ))}
         </Box>
         <Typography variant="body2" className={classes.releaseDate}>

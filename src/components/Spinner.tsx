@@ -7,7 +7,7 @@ interface Props {
 
 export function Spinner({ size, color }: Props) {
   return (
-    <Box>
+    <Box data-testid="spinner">
       <CircularProgress size={size} sx={{ color }} />
     </Box>
   )

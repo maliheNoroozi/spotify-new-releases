@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
-import { useAppDispatch, useAppSelector } from "../../app/hooks"
-import { fetchNewReleases } from "./newReleasesSlice"
-import Album from "../../components/Album/Album"
 import { Box, Typography } from "@mui/material"
-import AlbumPagination from "../../components/AlbumPagination"
-import { Spinner } from "../../components/Spinner"
-import { Center } from "../../components/Center/Center"
-import { Status } from "../../types"
+import { useAppDispatch, useAppSelector } from "@/app/hooks"
+import { Album } from "@/components/Album"
+import { AlbumPagination } from "@/components/AlbumPagination"
+import { Spinner } from "@/components/Spinner"
+import { Center } from "@/components/Center"
+import { Status } from "@/types"
+import { fetchNewReleases } from "./newReleasesSlice"
 
 import classes from "./NewReleases.module.css"
 
@@ -20,28 +20,42 @@ export function NewReleases() {
 
   useEffect(() => {
     const offset = (currentPage - 1) * LIMIT
-    const canFetchNewReleases =
-      status !== Status.pending &&
-      status !== Status.failed &&
-      pages[currentPage] === undefined
-    if (canFetchNewReleases) {
+    const shouldFetch =
+      status === Status.idle ||
+      (status === Status.succeeded && !pages[currentPage])
+
+    if (shouldFetch) {
       dispatch(fetchNewReleases({ limit: LIMIT, offset }))
     }
-  }, [dispatch, status, currentPage, pages])
+  }, [dispatch, currentPage, pages, status])
 
-  let content = null
-  if (status === Status.pending) {
-    content = (
-      <Center>
-        <Spinner size={80} color="#808080" />
-      </Center>
-    )
-  } else if (!!error) {
-    content = <Center>Error: {error}</Center>
-  } else if (!pages[currentPage]?.length && status === "succeeded") {
-    content = <Center>No new releases available.</Center>
-  } else {
-    content = (
+  const renderContent = () => {
+    if (status === Status.pending) {
+      return (
+        <Center>
+          <Spinner size={80} color="#808080" />
+        </Center>
+      )
+    }
+    if (error) {
+      return (
+        <Center>
+          <Typography variant="h6" className="errorMessage">
+            Something went wrong: {error}
+          </Typography>
+        </Center>
+      )
+    }
+    if (!pages[currentPage]?.length && status === Status.succeeded) {
+      return (
+        <Center>
+          <Typography variant="h6" className={classes.emptyMessage}>
+            No new releases available at the moment.
+          </Typography>
+        </Center>
+      )
+    }
+    return (
       <Box className={classes.albums}>
         {pages[currentPage]?.map(album => (
           <Album key={album.id} album={album} />
@@ -53,9 +67,9 @@ export function NewReleases() {
   return (
     <Box className={classes.container}>
       <Typography variant="h4" align="left" className={classes.header}>
-        Spotify Release List
+        Spotify New Releases
       </Typography>
-      <Box className={classes.content}>{content}</Box>
+      <Box className={classes.content}>{renderContent()}</Box>
       <AlbumPagination onPageChange={setCurrentPage} />
     </Box>
   )

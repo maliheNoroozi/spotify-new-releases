@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { RootState } from "../../app/store"
-import { Album, Status } from "../../types"
+import { RootState } from "@/app/store"
+import { Album, Status } from "@/types"
 
 export interface NewReleasesState {
   pages: Record<number, Album[]>
@@ -51,7 +51,6 @@ export const fetchNewReleases = createAsyncThunk<
 
       const data = await response.json()
 
-      console.log({ data })
       return {
         albums: data.albums.items,
         total: data.albums.total,

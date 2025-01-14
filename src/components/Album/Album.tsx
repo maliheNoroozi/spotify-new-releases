@@ -6,8 +6,8 @@ import {
   Link,
   Typography,
 } from "@mui/material"
-import { Album as AlbumType } from "../../types"
-import { formatDateByLocale } from "../../utils/format-time"
+import { Album as AlbumType } from "@/types"
+import { formatDateByLocale } from "@/utils/format-time"
 
 import classes from "./Album.module.css"
 
@@ -15,35 +15,44 @@ interface Props {
   album: AlbumType
 }
 
-export default function Album({ album }: Props) {
+export function Album({ album }: Props) {
+  const { images, name, uri, artists, release_date } = album
+
   return (
-    <Card sx={{ width: album.images[0].width }}>
+    <Card className={classes.card}>
       <CardMedia
         component="img"
-        image={album.images[0].url}
-        title={album.name}
-        alt={album.name}
-        sx={{
-          height: album.images[0].height,
-          width: album.images[0].width,
-        }}
+        image={images[0]?.url}
+        title={name}
+        alt={name}
+        className={classes.image}
+        sx={{ height: album.images[0].height || 300 }}
       />
-
-      <CardContent className={classes.flex}>
-        <Link href={album.uri} underline="hover">
-          <Typography variant="body1" noWrap className={classes.name}>
-            {album.name}
+      <CardContent className={classes.content}>
+        <Link
+          href={uri}
+          underline="hover"
+          color="textPrimary"
+          className={classes.fullWidth}
+        >
+          <Typography variant="body1" noWrap>
+            {name}
           </Typography>
         </Link>
-        <Box>
-          {album.artists.map(artist => (
-            <Link href={artist.uri} key={artist.id} underline="hover">
+        <Box className={classes.artists}>
+          {artists.map(artist => (
+            <Link
+              href={artist.uri}
+              key={artist.id}
+              underline="hover"
+              color="textPrimary"
+            >
               {artist.name}
             </Link>
           ))}
         </Box>
-        <Typography variant="body1" className={classes.releaseDate}>
-          Release Date: {formatDateByLocale(album.release_date)}
+        <Typography variant="body2" className={classes.releaseDate}>
+          Release Date: {formatDateByLocale(release_date)}
         </Typography>
       </CardContent>
     </Card>

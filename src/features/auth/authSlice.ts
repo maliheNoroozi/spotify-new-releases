@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
-import { Status } from "../../types"
+import { Status } from "@/types"
 
 const clientId = import.meta.env.VITE_REACT_APP_SPOTIFY_CLIENT_ID
 const clientSecret = import.meta.env.VITE_REACT_APP_SPOTIFY_CLIENT_SECRET

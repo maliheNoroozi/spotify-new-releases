@@ -1,5 +1,4 @@
-import CircularProgress from "@mui/material/CircularProgress"
-import Box from "@mui/material/Box"
+import { Box, CircularProgress } from "@mui/material"
 
 interface Props {
   size: number

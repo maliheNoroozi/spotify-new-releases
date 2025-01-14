@@ -3,7 +3,7 @@ import newReleasesReducer, {
   fetchNewReleases,
   initialState,
 } from "./newReleasesSlice"
-import { Status } from "../../types"
+import { Status } from "@/types"
 
 const mpockAlbums = [
   { id: "1", name: "test 1" },

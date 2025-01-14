@@ -1,14 +1,13 @@
 import { Dispatch, SetStateAction } from "react"
 import { Pagination, Stack, useMediaQuery, useTheme } from "@mui/material"
-import { useAppSelector } from "../app/hooks"
+import { useAppSelector } from "@/app/hooks"
 
-export default function AlbumPagination({
-  onPageChange,
-}: {
+interface Props {
   onPageChange: Dispatch<SetStateAction<number>>
-}) {
-  const { totalPages } = useAppSelector(state => state.newReleases)
+}
 
+export function AlbumPagination({ onPageChange }: Props) {
+  const { totalPages } = useAppSelector(state => state.newReleases)
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
 

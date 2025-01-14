@@ -1,5 +1,5 @@
 import { Box } from "@mui/material"
-import AppRouter from "./router"
+import AppRouter from "@/router"
 
 import "./App.css"
 

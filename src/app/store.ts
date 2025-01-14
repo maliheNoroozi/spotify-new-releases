@@ -2,8 +2,8 @@ import type { Action, ThunkAction } from "@reduxjs/toolkit"
 import { combineSlices, configureStore } from "@reduxjs/toolkit"
 import { setupListeners } from "@reduxjs/toolkit/query"
 
-import { authSlice } from "../features/auth/authSlice"
-import { newReleasesSlice } from "../features/newReleases/newReleasesSlice"
+import { authSlice } from "@/features/auth"
+import { newReleasesSlice } from "@/features/newReleases"
 
 const rootReducer = combineSlices(authSlice, newReleasesSlice)
 

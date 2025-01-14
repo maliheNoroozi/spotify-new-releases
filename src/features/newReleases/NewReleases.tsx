@@ -52,7 +52,9 @@ export function NewReleases() {
 
   return (
     <Box className={classes.container}>
-      <Typography>Hello World</Typography>
+      <Typography variant="h4" align="left" className={classes.header}>
+        Spotify Release List
+      </Typography>
       <Box className={classes.content}>{content}</Box>
       <AlbumPagination onPageChange={setCurrentPage} />
     </Box>

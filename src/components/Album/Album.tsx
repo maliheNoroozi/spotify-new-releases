@@ -1,6 +1,6 @@
 import {
+  Box,
   Card,
-  CardActionArea,
   CardContent,
   CardMedia,
   Link,
@@ -18,36 +18,34 @@ interface Props {
 export default function Album({ album }: Props) {
   return (
     <Card sx={{ width: album.images[0].width }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          image={album.images[0].url}
-          title={album.name}
-          alt={album.name}
-          sx={{
-            height: album.images[0].height,
-            width: album.images[0].width,
-          }}
-        />
+      <CardMedia
+        component="img"
+        image={album.images[0].url}
+        title={album.name}
+        alt={album.name}
+        sx={{
+          height: album.images[0].height,
+          width: album.images[0].width,
+        }}
+      />
 
-        <CardContent>
-          <Link href={album.uri} underline="hover">
-            <Typography variant="body1" noWrap>
-              {album.name}
-            </Typography>
-          </Link>
-          <div>
-            {album.artists.map(artist => (
-              <Link href={artist.uri} key={artist.id} underline="hover">
-                {artist.name}
-              </Link>
-            ))}
-          </div>
-          <Typography variant="body1" className={classes.releaseDate}>
-            Release Date: {formatDateByLocale(album.release_date)}
+      <CardContent className={classes.flex}>
+        <Link href={album.uri} underline="hover">
+          <Typography variant="body1" noWrap className={classes.name}>
+            {album.name}
           </Typography>
-        </CardContent>
-      </CardActionArea>
+        </Link>
+        <Box>
+          {album.artists.map(artist => (
+            <Link href={artist.uri} key={artist.id} underline="hover">
+              {artist.name}
+            </Link>
+          ))}
+        </Box>
+        <Typography variant="body1" className={classes.releaseDate}>
+          Release Date: {formatDateByLocale(album.release_date)}
+        </Typography>
+      </CardContent>
     </Card>
   )
 }

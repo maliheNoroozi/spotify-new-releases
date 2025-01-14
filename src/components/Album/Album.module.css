@@ -1,6 +1,13 @@
+.flex {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+}
+
 .releaseDate {
   font-size: 1rem;
-  color: #6c6969;
+  color: #7e7a7a;
   font-weight: bold;
   margin-top: 8px;
 }

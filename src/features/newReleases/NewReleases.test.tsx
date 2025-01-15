@@ -11,7 +11,7 @@ const preloadedState = {
     pages: {},
     status: Status.idle,
     error: null,
-    totalPages: 5,
+    totalPages: 0,
   },
   auth: {
     access_token: "mock_access_token",

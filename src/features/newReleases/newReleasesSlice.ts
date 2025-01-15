@@ -13,7 +13,7 @@ export const initialState: NewReleasesState = {
   pages: {},
   status: Status.idle,
   error: null,
-  totalPages: 5,
+  totalPages: 0,
 }
 
 export const fetchNewReleases = createAsyncThunk<

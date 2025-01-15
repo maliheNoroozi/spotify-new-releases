@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { Box, Typography } from "@mui/material"
 import { useAppDispatch, useAppSelector } from "@/app/hooks"
 import { Album } from "@/components/Album"
-import { AlbumPagination } from "@/components/AlbumPagination"
+import { Pagination } from "@/components/Pagination"
 import { Spinner } from "@/components/Spinner"
 import { Center } from "@/components/Center"
 import { Status } from "@/types"
@@ -70,7 +70,7 @@ export function NewReleases() {
         Spotify New Releases
       </Typography>
       <Box className={classes.content}>{renderContent()}</Box>
-      <AlbumPagination onPageChange={setCurrentPage} />
+      <Pagination onPageChange={setCurrentPage} />
     </Box>
   )
 }

@@ -27,9 +27,23 @@ npm install
 
 ## Scripts
 
-- `npm run dev`/`npm run start` - start dev server and open browser
-- `npm run build` - build for production
-- `npm run test` - launch test runner
+- start dev server and open browser
+
+```bash
+npm run dev`/`npm run start
+```
+
+- build for production
+
+```bash
+npm run build
+```
+
+- Run unit tests
+
+```bash
+npm run test
+```
 
 ## Middleware for API Requests
 

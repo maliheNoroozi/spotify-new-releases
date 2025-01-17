@@ -30,7 +30,7 @@ npm install
 - start dev server and open browser
 
 ```bash
-npm run dev`/`npm run start
+npm run dev
 ```
 
 - build for production

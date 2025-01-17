@@ -1,10 +1,16 @@
-export const mockFetchResolve = <T>(mockResponse: T): void => {
-  global.fetch = vi.fn().mockResolvedValueOnce({
-    ok: true,
-    json: async (): Promise<T> => mockResponse,
-  })
-}
+import { Method } from "axios"
+import { mock } from "@/setupTests"
 
-export const mockFetchReject = (errorMessage: string) => {
-  global.fetch = vi.fn().mockRejectedValueOnce(new Error(errorMessage))
+export const mockAxiosResolve = <T>(
+  method: Method,
+  url: string,
+  mockResponse: T,
+  status: number = 200,
+): void => {
+  mock.onAny(url).reply(config => {
+    if (config.method?.toLowerCase() === method.toLowerCase()) {
+      return [status, mockResponse]
+    }
+    return [404, { error: "Not found" }]
+  })
 }

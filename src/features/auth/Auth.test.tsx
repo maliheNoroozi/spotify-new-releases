@@ -1,10 +1,11 @@
 import { AxiosError } from "axios"
 import { screen, waitFor } from "@testing-library/dom"
 import { renderWithProviders } from "@/utils/test-render-utils"
-import { mock, mockAxiosPostResolve } from "@/setupTests"
 import { Status } from "@/types"
 import { Auth } from "./Auth"
 import { authEndpoint } from "./authSlice"
+import { mock } from "@/setupTests"
+import { mockAxiosResolve } from "@/utils/test-utils"
 
 export const preloadedState = {
   newReleases: {
@@ -34,7 +35,7 @@ const renderAuthWithProviders = () => {
 
 describe("Auth component tests", () => {
   test("fetches access_token and renders its children", async () => {
-    mockAxiosPostResolve(authEndpoint, {
+    mockAxiosResolve("POST", authEndpoint, {
       access_token: "mock_access_token",
       expires_in: 12,
     })

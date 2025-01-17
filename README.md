@@ -17,23 +17,9 @@ npm install
 
 ## Scripts
 
-- start dev server and open browser
-
-```bash
-npm run dev
-```
-
-- build for production
-
-```bash
-npm run build
-```
-
-- Run unit tests
-
-```bash
-npm run test
-```
+- `npm run dev`/`npm run start` - start dev server and open browser
+- `npm run build` - build for production
+- `npm run test` - launch test runner
 
 ## Middleware for API Requests
 
@@ -48,14 +34,6 @@ A custom `apiMiddleware` is implemented using [Axios](https://axios-http.com/). 
 - Centralized control over API configuration.
 - Cleaner and DRY (Don't Repeat Yourself) codebase.
 - Facilitates easier updates and maintenance, e.g., if the Spotify API changes.
-
-### Transition to Axios
-
-The project currently uses the Fetch API for all requests. If Axios were to be adopted project-wide:
-
-1. Update all API calls to use Axios.
-2. Adjust existing tests to mock Axios instead of Fetch.
-3. Optionally, use [MSW](https://mswjs.io/) for API request mocking during testing.
 
 ## Limitations
 

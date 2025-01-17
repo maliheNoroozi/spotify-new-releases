@@ -2,27 +2,17 @@ import "@testing-library/jest-dom/vitest"
 import AxiosMockAdapter from "axios-mock-adapter"
 import axios from "axios"
 
-export let mock: AxiosMockAdapter
+const createMock = () => new AxiosMockAdapter(axios, { delayResponse: 1000 })
+export let mock = createMock()
 
-const setupMockAxios = () => {
-  mock = new AxiosMockAdapter(axios, { delayResponse: 1000 })
-  return mock
-}
+afterEach(() => {
+  mock.reset()
+})
 
 beforeEach(() => {
-  mock = setupMockAxios()
+  mock = createMock()
 })
 
 afterAll(() => {
-  if (mock) {
-    mock.reset()
-  }
+  mock.restore()
 })
-
-export const mockAxiosGetResolve = <T>(url: string, mockResponse: T): void => {
-  mock.onGet(url).reply(200, mockResponse)
-}
-
-export const mockAxiosPostResolve = <T>(url: string, mockResponse: T): void => {
-  mock.onPost(url).reply(200, mockResponse)
-}

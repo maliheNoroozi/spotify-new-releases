@@ -5,7 +5,8 @@ import { renderWithProviders } from "@/utils/test-render-utils"
 import { Status } from "@/types"
 import { NewReleases } from "./NewReleases"
 import { mockAlbums } from "./test-utils"
-import { mock, mockAxiosGetResolve } from "@/setupTests"
+import { mock } from "@/setupTests"
+import { mockAxiosResolve } from "@/utils/test-utils"
 
 const newReleasesEndPoint = "/browse/new-releases?limit=10&offset=0"
 
@@ -27,7 +28,7 @@ const preloadedState = {
 describe("NewReleases component tests", () => {
   test("renders empty message if no new releases are available", async () => {
     // Mock the API response with an empty releases list
-    mockAxiosGetResolve(newReleasesEndPoint, {
+    mockAxiosResolve("GET", newReleasesEndPoint, {
       albums: {
         items: [],
         total: 0,
@@ -43,24 +44,9 @@ describe("NewReleases component tests", () => {
     })
   })
 
-  test("displays error message if the API call fails", async () => {
-    // Mock the API response with an error
-    mock.onGet(newReleasesEndPoint).reply(() => {
-      throw new AxiosError("API error")
-    })
-
-    renderWithProviders(<NewReleases />, { preloadedState })
-
-    await waitFor(() => {
-      expect(
-        screen.queryByText(/something went wrong: api error/i),
-      ).toBeInTheDocument()
-    })
-  })
-
   test("fetches and renders new releases", async () => {
     // Mock the API response with 2 albums in releases list
-    mockAxiosGetResolve(newReleasesEndPoint, {
+    mockAxiosResolve("GET", newReleasesEndPoint, {
       albums: {
         items: mockAlbums,
         total: 2,
@@ -99,5 +85,20 @@ describe("NewReleases component tests", () => {
 
     expect(screen.queryByText(mockAlbums[0].name)).toBeInTheDocument()
     expect(screen.queryByText(mockAlbums[1].name)).toBeInTheDocument()
+  })
+
+  test("displays error message if the API call fails", async () => {
+    // Mock the API response with an error
+    mock.onGet(newReleasesEndPoint).reply(() => {
+      throw new AxiosError("API error")
+    })
+
+    renderWithProviders(<NewReleases />, { preloadedState })
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText(/something went wrong: api error/i),
+      ).toBeInTheDocument()
+    })
   })
 })

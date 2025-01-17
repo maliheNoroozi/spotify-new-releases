@@ -3,6 +3,7 @@ import { Status } from "@/types"
 
 const clientId = import.meta.env.VITE_REACT_APP_SPOTIFY_CLIENT_ID
 const clientSecret = import.meta.env.VITE_REACT_APP_SPOTIFY_CLIENT_SECRET
+const encodedCredentials = btoa(`${clientId}:${clientSecret}`)
 const authEndpoint = "https://accounts.spotify.com/api/token"
 
 export interface AuthState {
@@ -22,8 +23,6 @@ const initialState: AuthState = {
 export const fetchAccessToken = createAsyncThunk(
   "auth/fetchAccessToken",
   async (_, { rejectWithValue }) => {
-    const encodedCredentials = btoa(`${clientId}:${clientSecret}`)
-
     try {
       const response = await fetch(authEndpoint, {
         method: "POST",

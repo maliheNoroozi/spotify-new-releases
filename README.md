@@ -1,14 +1,4 @@
-# Vite-Template-Redux
-
 This project is built using [Vite](https://vitejs.dev/), [React](https://react.dev/), [Redux Toolkit](https://redux-toolkit.js.org/), and TypeScript to create a modern React application. It incorporates testing with [Vitest](https://vitest.dev/) and [React Testing Library](https://github.com/testing-library/react-testing-library). The app also integrates the [Spotify API](https://developer.spotify.com/documentation/web-api/) to fetch data.
-
-## Features
-
-- **Fast Development**: Powered by Vite, enabling a blazing-fast development environment.
-- **State Management**: Utilizes Redux Toolkit for state management.
-- **Type Safety**: Written entirely in TypeScript for a robust development experience.
-- **API Integration**: Communicates with the Spotify API using modern Fetch API.
-- **Testing**: unit testing setup with Vitest and React Testing Library.
 
 ## Setup
 

@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit"
 import { Status } from "@/types"
+import axios from "axios"
 
 const clientId = import.meta.env.VITE_REACT_APP_SPOTIFY_CLIENT_ID
 const clientSecret = import.meta.env.VITE_REACT_APP_SPOTIFY_CLIENT_SECRET
 const encodedCredentials = btoa(`${clientId}:${clientSecret}`)
-const authEndpoint = "https://accounts.spotify.com/api/token"
+export const authEndpoint = "https://accounts.spotify.com/api/token"
 
 export interface AuthState {
   access_token: string | null
@@ -24,27 +25,24 @@ export const fetchAccessToken = createAsyncThunk(
   "auth/fetchAccessToken",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await fetch(authEndpoint, {
+      const response = await axios(authEndpoint, {
         method: "POST",
         headers: {
           Authorization: `Basic ${encodedCredentials}`,
           "Content-Type": "application/x-www-form-urlencoded",
         },
-        body: new URLSearchParams({ grant_type: "client_credentials" }),
+        data: new URLSearchParams({ grant_type: "client_credentials" }),
       })
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch access token")
-      }
-
-      const data = await response.json()
       return {
-        access_token: data.access_token,
-        expires_in: data.expires_in,
+        access_token: response.data.access_token,
+        expires_in: response.data.expires_in,
       }
     } catch (error) {
       return rejectWithValue(
-        error instanceof Error ? error.message : "Unknown error",
+        axios.isAxiosError(error) || error instanceof Error
+          ? error.message
+          : "An unexpected error occurred while fetching the accee_token",
       )
     }
   },

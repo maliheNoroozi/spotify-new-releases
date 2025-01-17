@@ -4,6 +4,7 @@ import { setupListeners } from "@reduxjs/toolkit/query"
 
 import { authSlice } from "@/features/auth"
 import { newReleasesSlice } from "@/features/newReleases"
+import { apiMiddleware } from "./apiMiddleware"
 
 const rootReducer = combineSlices(authSlice, newReleasesSlice)
 
@@ -13,8 +14,7 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
     // Adding the api middleware enables caching, invalidation, polling,
     // and other useful features of `rtk-query`.
     middleware: getDefaultMiddleware => {
-      return getDefaultMiddleware()
-      // .concat(apiMiddleware)
+      return getDefaultMiddleware().concat(apiMiddleware)
     },
     preloadedState,
   })

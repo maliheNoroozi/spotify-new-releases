@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
-import { RootState } from "@/app/store"
 import { Album, Status } from "@/types"
+import axios from "axios"
 
 export interface NewReleasesState {
   pages: Record<number, Album[]>
@@ -24,40 +24,22 @@ export const fetchNewReleases = createAsyncThunk<
   "newReleases/fetchNewReleases",
   async (
     { limit, offset }: { limit: number; offset: number },
-    { getState, rejectWithValue },
+    { rejectWithValue },
   ) => {
     try {
-      const state = getState() as RootState
-      const { access_token } = state.auth
-
-      if (!access_token) {
-        throw new Error("Access token is not available")
-      }
-
-      const headers = new Headers()
-      headers.append("Authorization", `Bearer ${access_token}`)
-      headers.append("Content-Type", "application/json")
-
-      const response = await fetch(
-        `https://api.spotify.com/v1/browse/new-releases?limit=${limit}&offset=${offset}`,
-        {
-          headers,
-        },
+      const response = await axios(
+        `/browse/new-releases?limit=${limit}&offset=${offset}`,
       )
 
-      if (!response.ok) {
-        throw new Error("Failed to fetch new releases")
-      }
-
-      const data = await response.json()
-
       return {
-        albums: data.albums.items,
-        total: data.albums.total,
+        albums: response.data.albums.items,
+        total: response.data.albums.total,
       }
     } catch (error) {
       return rejectWithValue(
-        error instanceof Error ? error.message : "Failed to fetch new releases",
+        axios.isAxiosError(error) || error instanceof Error
+          ? error.message
+          : "An unexpected error occurred while fetching the new releases",
       )
     }
   },

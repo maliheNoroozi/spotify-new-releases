@@ -5,7 +5,7 @@ This project is built using [Vite](https://vitejs.dev/), [React](https://react.d
 To get started, if you have access to the project in github, clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/maliheNoroozi/spotify-new-releases.git
+https://github.com/maliheNoroozi/spotify-new-releases.git
 npm install
 ```
 
